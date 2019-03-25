@@ -13,7 +13,7 @@
  * If things are working correctly, only one Woolie will be on the
  * bridge at a time.
  *
- * @author     Jim Vallino
+ * @author Jim Vallino
  */
 public class TestTroll {
 
@@ -23,18 +23,18 @@ public class TestTroll {
      * @param "args[]" command line arguments (ignored)
      */
 
-    public static void main( String args[] ) {
+    public static void main(String args[]) {
         // Here come the Woolies...
         // Create a bridge troll
 
         Bridge troll = new Bridge();
 
 
-        Thread ped1 = new Woolie( "Jim", 3, "Merctran", troll );
-        Thread ped2 = new Woolie( "Paul", 5, "Merctran", troll );
-        Thread ped3 = new Woolie( "H-P", 10, "Sicstine", troll );
-        Thread ped4 = new Woolie( "Karen", 4, "Sicstine", troll );
-        Thread ped5 = new Woolie( "Edith", 6, "Sicstine", troll );
+        Thread ped1 = new Woolie("Jim", 3, "Merctran", troll);
+        Thread ped2 = new Woolie("Paul", 5, "Merctran", troll);
+        Thread ped3 = new Woolie("H-P", 10, "Sicstine", troll);
+        Thread ped4 = new Woolie("Karen", 4, "Sicstine", troll);
+        Thread ped5 = new Woolie("Edith", 6, "Sicstine", troll);
 
         // Run them
 
@@ -52,8 +52,8 @@ public class TestTroll {
             Thread.currentThread().sleep(500);
 
             ped5.start();
+        } catch (InterruptedException e) {
         }
-        catch(InterruptedException e) {}
 
     }
 }

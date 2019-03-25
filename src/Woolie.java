@@ -14,13 +14,13 @@
  * Each woolie object is constructed with a name, length of time it
  * takes the woolie to cross the bridge, and a destination city.  Woolie
  * objects extend the Thread class and execute as an individual thread.
- *
+ * <p>
  * Before crossing the bridge, a Woolie will ask a bridge troll for
  * permission to cross.  Once the bridge troll grants permission, the
  * Woolie crosses the bridge.  Once on the other side, the Woolie will
  * notify the troll that they have left the bridge.
  *
- * @author      Jim Vallino
+ * @author Jim Vallino
  */
 public class Woolie extends Thread {
     private String name;         // The name of this Woolie
@@ -34,15 +34,15 @@ public class Woolie extends Thread {
      * thread.  The constructor will simply initialize all of the
      * instance fields.
      *
-     * @param       myName          the name of this Woolie
-     * @param       myCrossingTime  the number of seconds it takes the Woolie
-     *                              to cross the bridge
-     * @param       myDestination   the city the Woolie is heading to
-     * @param       theBridge       the bridge the Woolie is crossing
+     * @param myName         the name of this Woolie
+     * @param myCrossingTime the number of seconds it takes the Woolie
+     *                       to cross the bridge
+     * @param myDestination  the city the Woolie is heading to
+     * @param theBridge      the bridge the Woolie is crossing
      */
 
-    public Woolie( String myName, int myCrossingTime, String myDestination,
-                   Bridge theBridge ) {
+    public Woolie(String myName, int myCrossingTime, String myDestination,
+                  Bridge theBridge) {
         name = myName;
         crossingTime = myCrossingTime;
         destination = myDestination;
@@ -75,42 +75,54 @@ public class Woolie extends Thread {
      * where <code>city</code> is the Woolie's destination.
      * </ul>
      */
+    public void waiting() {
+        try {
+            this.wait();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
 
-    public void run() {
+    public void notifying() {
+        this.notifyAll();
+    }
+
+    public synchronized void run() {
 
         // The Woolie has started to cross the bridge
 
         System.out.println(name + " has arrived at the bridge.");
 
         // Get permission to cross from the troll
-
         theTroll.enterBridge(this);
 
         // Simulate the time on the bridge
 
-        for ( int time = 0; time < crossingTime; time++ ) {
+        for (int time = 0; time < crossingTime; time++) {
             // Take care of output
-
-            if( time == 0 )
-                System.out.println( name + " is starting to cross." );
-            else
-                System.out.println( "\t" + name + ' ' + time + " seconds." );
+            if (time == 0) {
+                System.out.println(name + " is starting to cross.");
+            } else {
+                System.out.println("\t" + name + ' ' + time + " seconds.");
+            }
 
             // Let time pass
 
             try {
                 sleep(1000);
+            } catch (InterruptedException e) {
+
             }
-            catch( InterruptedException e ) {}
         }
 
         // Tell the troll we have crossed
+
 
         theTroll.leaveBridge(this);
 
         // Finished crossing
 
-        System.out.println( name + " leaves at " + destination + "." );
+        System.out.println(name + " leaves at " + destination + ".");
     }
 
 } // Woolie
