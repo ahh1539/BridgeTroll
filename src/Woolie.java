@@ -84,7 +84,7 @@ public class Woolie extends Thread {
 
         // Get permission to cross from the troll
 
-        theTroll.enterBridge();
+        theTroll.enterBridge(this);
 
         // Simulate the time on the bridge
 
@@ -106,7 +106,7 @@ public class Woolie extends Thread {
 
         // Tell the troll we have crossed
 
-        theTroll.leaveBridge();
+        theTroll.leaveBridge(this);
 
         // Finished crossing
 

@@ -9,6 +9,7 @@
  */
 
 import java.util.*;
+import java.util.concurrent.locks.Lock;
 
 /**
  * Simulation of the bridge troll controlling the passage of
@@ -29,6 +30,8 @@ public class Bridge {
 
     private int numOnBridge;  // The number of Woolies on the bridge
 
+    private Lock lock;
+
     /**
      * Constructor for the Bridge class.
      */
@@ -41,11 +44,18 @@ public class Bridge {
      *  Request permission to enter the bridge.
      */
 
-    public void enterBridge() {
+    public void enterBridge(Woolie woolie) {
         // As long as there is no room for the Woolie on the
         // bridge, we have to wait.  Eventually the Woolie on the
         // bridge will cross and I will be notified.
-
+        if (numOnBridge >= 1){
+            try {
+                woolie.wait();
+            } catch (InterruptedException e){}
+        }
+        else {
+            woolie.run();
+        }
 
 
         // There is one more Woolie on the bridge
@@ -57,13 +67,15 @@ public class Bridge {
      *   Notify the bridge troll that a Woolie is leaving the bridge.
      */
 
-    public void leaveBridge() {
+    public void leaveBridge(Woolie woolie) {
         // Someone just left the bridge
 
         if ( numOnBridge > 0 ) {
             // One less Woolie on the bridge
             numOnBridge--;
-
+        if (numOnBridge == 0){
+            woolie.notify();
+        }
             // Wake up all the waiting Woolies and let the race
             // begin.  One of them will get the lock on enterBridge()
             // first.
