@@ -1,12 +1,3 @@
-/*
- * Woolie.java
- *
- * Version:
- *   $Id$
- *
- * Revisions:
- *   $Log$
- */
 
 /**
  * Woolie - simulates a woolie crossing a bridge
@@ -87,7 +78,7 @@ public class Woolie extends Thread {
         this.notifyAll();
     }
 
-    public synchronized void run() {
+    public void run() {
 
         // The Woolie has started to cross the bridge
 

@@ -1,12 +1,3 @@
-/*
- * Bridge.java
- *
- * Version:
- *   $Id$
- *
- * Revisions:
- *   $Log$
- */
 
 import java.util.*;
 import java.util.concurrent.TimeUnit;
@@ -21,7 +12,7 @@ import java.util.concurrent.locks.Lock;
  * a time.  Waiting Woolies are selected at random and allowed to
  * cross when the bridge is free.
  *
- * @author Jim Vallino
+ * @author Jim Vallino && Alex Hurley
  */
 
 public class Bridge {
@@ -71,7 +62,7 @@ public class Bridge {
         if (getNumOnBridge() > 0) {
             // One less Woolie on the bridge
             subNumOnBridge();
-            notifyAll();
+            notify();
             // Wake up all the waiting Woolies and let the race
             // begin.  One of them will get the lock on enterBridge()
             // first.
